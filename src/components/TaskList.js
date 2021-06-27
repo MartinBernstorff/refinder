@@ -57,6 +57,7 @@ export default function TaskList(props) {
                             reRun={props.reRun}
                             URL={record.fields.URL}
                             key={record.id}
+                            reading={record.fields.Reading}
                         />
                     ))
                 ) : (
