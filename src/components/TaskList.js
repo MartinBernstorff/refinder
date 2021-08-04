@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Todo from "./Record";
+import Article from "./Record";
 import Airtable from 'airtable-node'
 
 const airtable = new Airtable({apiKey: 'keywMvCl7aRV4a5af'})
@@ -41,16 +41,15 @@ export default function TaskList(props) {
     console.log("Testing " + props.cycle)
 
     return (
-        <div className="justify-center max-w-lg m-5 w-full">
-            <ul>
+        <div className="gap-3 grid w-full grid-cols-3">
                 {activities.length > 0 ? (
                     activities
                     .sort(function (a,b) {
                         return b.fields.SelectionWeight - a.fields.SelectionWeight
                     })
-                    .slice(0, 1)
+                    .slice(0, 3)
                     .map((record) => (
-                        <Todo
+                        <Article
                             name={record.fields.Name}
                             excerpt={record.fields.Excerpt}
                             id={record.id}
@@ -63,7 +62,6 @@ export default function TaskList(props) {
                 ) : (
                     <p>Fetching Data...</p>
                 )}
-            </ul>
         </div>
     );
 }

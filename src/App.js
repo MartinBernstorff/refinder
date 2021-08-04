@@ -39,7 +39,7 @@ function App(props) {
   */
 
   return (
-    <div className="grid mx-auto max-w-3xl">
+    <div className="grid mx-auto max-w-5xl mt-2">
         {/* <ul className="grid grid-cols-2">
           {goals.length > 0 ? (
               goals
@@ -55,12 +55,10 @@ function App(props) {
               <p>Fetching Data...</p>
           )}
           </ul> */}
-      <div className="grid place-items-center">
         <TaskList 
           filter="False"
           reRun={reRun}
         />
-      </div>
     </div>
   );
 }

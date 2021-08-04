@@ -1,6 +1,7 @@
 import React , {Component} from "react";
 import Airtable from 'airtable-node'
 import { dom } from "@fortawesome/fontawesome-svg-core";
+import Button from "./Button";
 
 const Media = new Airtable({apiKey: 'keywMvCl7aRV4a5af'})
     .base('appaZPyyxt98aRiRU')
@@ -10,7 +11,8 @@ const Ratings = new Airtable({apiKey: 'keywMvCl7aRV4a5af'})
     .base('appaZPyyxt98aRiRU')
     .table('Ratings')
 
-class Todo extends Component {
+class Article extends Component {
+    URL = this.props.URL
     rate = (rating) => {
         console.log("Rating " + this.props.name + " with a " + rating)
 
@@ -40,71 +42,59 @@ class Todo extends Component {
 
     open = () => {
         console.log("Marking " + this.props.name + " as reading")
-
-        var windowReference = window.open;
         
         Media.update(this.props.id, {"Reading": true}).then(resp => {
             console.log(resp)
-            window.open(this.URL);
+            window.location(this.URL);
 
         })
     }
     
     render() {
         return (
-        <div>
-            <div className="pb-2 grid grid-cols-3">
-                <a
-                        className= "rounded-lg px-2 py-2 border active:border-gray-500 m-2 text-center focus:outline-none shadow hover:shadow-md active:shadow-sm place-content-center"
+        <div className="grid gap-2 rounded-lg p-4 text-left justify-left text-justify">
+            <div className="mb-2 grid grid-cols-3 gap-2 h-6">
+                <Button
+                    href={"https://airtable.com/tblYG0PIvW9GELAvH/viwsdszRgNFdNL83F/" + this.props.id}
+                    title="Airtable"
+                />
+                <Button
+                    href={this.URL}
+                    title="Safari"
+                />
 
-                        href={"https://airtable.com/tblYG0PIvW9GELAvH/viwsdszRgNFdNL83F/" + this.props.id}
-                    >
-                            Airtable
-                </a>
-
-                <a 
-                        className= "rounded-lg px-2 py-2 border active:border-gray-500 m-2 text-center focus:outline-none shadow hover:shadow-md active:shadow-sm place-content-center"
-
-                        href={this.props.URL}
-                    >
-                            Open in Safari
-                </a>
-
-                <button onClick={() => this.markReading()} className={`rounded-lg px-2 py-2 border active:border-gray-500 m-2 text-center focus:outline-none shadow hover:shadow-md active:shadow-sm place-content-center ${this.props.reading ? "border-green-500" : ""}`} id="reading">
+                <button onClick={() => this.markReading()} className={`rounded-lg px-0 py-0 border active:border-gray-500 text-center focus:outline-none place-content-center text-sm ${this.props.reading ? "border-green-500 text-gray-400" : "text-gray-200"}`} id="reading">
                     Reading
                 </button>
             </div>
             
-            <a href={this.props.URL}>
-                <button onClick={() => this.open()} className="shadow-md hover:shadow-lg active:border-gray-500 group block rounded-lg p-4 border hover:border-gray-200 m-2 text-left justify-left text-justify">
-                    <div className="p-3 grid">
+            <a href={this.URL}>
+                <button onClick={() => this.open()} className="active:border-gray-500 group block rounded-lg hover:border-gray-200 text-left justify-left text-justify">
+                    <div className="p-1 grid">
                         <div className="font-medium text-black text-xl pb-2">{this.props.name}</div>
                         <div className="leading-5 text-sm">{this.props.excerpt}</div>
                     </div>
                 </button>
             </a>
 
-            <div className="grid">
+            <div className="grid grid-cols-3 gap-2">
                 <button onClick={() => this.rate(1)}
-                        className= "rounded-lg px-2 py-1 border active:border-gray-500 m-2 text-center focus:outline-none shadow hover:shadow-md active:shadow-sm"
-                    >
-                        Next
+                        className= "rounded-lg px-1 py-1 border active:border-gray-500 text-center focus:outline-none place-content-center text-xs"
+                >
+                        0
                 </button>
-            </div>
-
-            <div className="grid grid-rows-1 grid-cols-2">
                 <button 
-                    className= "rounded-lg px-2 py-1 border active:border-gray-500 m-2 text-center focus:outline-none shadow hover:shadow-md active:shadow-sm"
+                    className= "rounded-lg px-1 py-1 border active:border-gray-500 text-center focus:outline-none place-content-center text-xs"
                     onClick={() => this.rate(2)}
                 >
-                        Cultivate
+                        +
                 </button>
                 <button 
-                    className= "rounded-lg px-2 py-1 border active:border-gray-500 m-2 text-center focus:outline-none shadow hover:shadow-md active:shadow-sm"
+                    className= "rounded-lg px-1 py-1 border active:border-gray-500 text-center focus:outline-none place-content-center text-xs"
 
                     onClick={() => this.rate(3)}
                 >
-                        Curate
+                        ++
                 </button>
             </div>
         </div>
@@ -112,4 +102,4 @@ class Todo extends Component {
     }
 }
 
-export default Todo
+export default Article
